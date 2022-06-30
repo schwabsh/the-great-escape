@@ -9,6 +9,8 @@ services:
 
   bridge-service:
     build: ./bridge/service
+    ports:
+      - 9699:9699
     # TODO 1
 
   engine-fe:
@@ -22,7 +24,7 @@ services:
       - 9799:9799
     healthcheck:
       # TODO 2
-      test: [ "CMD", "curl", "--fail", "localhost:9799/ENDPOINTHERE" ]
+      test: [ "CMD", "curl", "--fail", "localhost:9799/ryggbr" ]
       interval: 5s
       timeout: 10s
       retries: 4
@@ -58,7 +60,7 @@ services:
       MYSQL_DATABASE: spacedb
       MYSQL_USER: user
       # TODO 3
-      # MYSQL_PASSWORD: PASSWORDHERE
+      MYSQL_PASSWORD: darkness
     volumes:
       - ./navigation/db:/docker-entrypoint-initdb.d
     depends_on:
@@ -67,7 +69,7 @@ services:
     healthcheck:
       test:
         # TODO 4
-        ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "user"] #,  "-pPASSWORDHERE"]
+        ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "user",  "-pdarkness"]
       interval: 5s
       timeout: 10s
       retries: 4
